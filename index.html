@@ -11,6 +11,7 @@ body{background:var(--bg);color:#fff;min-height:100vh;display:flex;justify-conte
 .tela{display:none;width:100%;max-width:460px}.tela.ativa{display:block}
 .card{background:var(--card);border:1px solid #222236;border-radius:24px;padding:28px}
 .btn{width:100%;padding:15px;background:var(--roxo);border:none;border-radius:12px;color:#fff;font-weight:700;cursor:pointer}
+.btn-sec{background:#222232}
 input{width:100%;padding:13px;background:#0f0f18;border:1px solid #2a2a3d;border-radius:10px;color:#fff;margin-bottom:10px}
 .banner{width:100%;height:110px;background:linear-gradient(135deg,#8b5cf6,#ec4899);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:11px;cursor:pointer;overflow:hidden}
 .foto{width:80px;height:80px;border-radius:50%;background:#222;border:4px solid var(--card);margin:-35px 0 0 20px;overflow:hidden;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:30px}
@@ -21,9 +22,14 @@ input{width:100%;padding:13px;background:#0f0f18;border:1px solid #2a2a3d;border
 </head>
 <body>
 
-<div id="tela1" class="tela ativa"><div class="card"><h1 style="text-align:center">PURPLE ACCOUNTS 2</h1><p style="color:var(--cinza);text-align:center;font-size:13px;margin:8px 0 20px">nova versão. sem suporte. sem reembolso.</p><button class="btn" onclick="ir('tela2')">Create Account</button></div></div>
+<div id="tela1" class="tela ativa"><div class="card"><h1 style="text-align:center">PURPLE ACCOUNTS 2</h1><p style="color:var(--cinza);text-align:center;font-size:13px;margin:8px 0 20px">nova versão. sem suporte. sem reembolso.</p>
+<button class="btn" onclick="ir('tela2')">Create Account</button>
+<button class="btn btn-sec" style="margin-top:10px" onclick="ir('telaLogin')">Entrar Na Conta</button>
+</div></div>
 
-<div id="tela2" class="tela"><div class="card"><h2>Criar</h2><br><input id="inputNome" placeholder="Seu nome"><input id="inputSenha" type="password" placeholder="Senha"><button class="btn" onclick="criarConta()">Criar</button><button class="btn" style="background:#222232;margin-top:10px" onclick="ir('tela1')">Voltar</button></div></div>
+<div id="tela2" class="tela"><div class="card"><h2>Criar</h2><br><input id="inputNome" placeholder="Seu nome"><input id="inputSenha" type="password" placeholder="Senha"><button class="btn" onclick="criarConta()">Criar</button><button class="btn btn-sec" style="margin-top:10px" onclick="ir('tela1')">Voltar</button></div></div>
+
+<div id="telaLogin" class="tela"><div class="card"><h2>Entrar</h2><br><input id="loginNome" placeholder="Seu nome"><input id="loginSenha" type="password" placeholder="Senha"><button class="btn" onclick="entrarConta()">Entrar</button><button class="btn btn-sec" style="margin-top:10px" onclick="ir('tela1')">Voltar</button><p id="loginErro" style="color:#ff5a5a;font-size:12px;margin-top:10px;text-align:center;display:none">nome ou senha errados</p></div></div>
 
 <div id="tela3" class="tela" style="max-width:500px"><div class="card">
 <div style="position:relative"><div class="banner" id="divBanner" onclick="trocarBanner()">TROCAR BANNER</div><div class="foto" id="divFoto" onclick="trocarFoto()">:)</div></div>
@@ -38,7 +44,7 @@ input{width:100%;padding:13px;background:#0f0f18;border:1px solid #2a2a3d;border
 <input type="file" id="fileFoto" accept="image/*" hidden><input type="file" id="fileBanner" accept="image/*" hidden>
 
 <script>
-function ir(id){document.querySelectorAll('.tela').forEach(x=>x.classList.remove('ativa'));document.getElementById(id).classList.add('ativa')}
+function ir(id){document.querySelectorAll('.tela').forEach(x=>x.classList.remove('ativa'));document.getElementById(id).classList.add('ativa'); document.getElementById('loginErro').style.display='none'}
 let dados = JSON.parse(localStorage.getItem('pac2')||'null');
 if(dados) carregar();
 
@@ -48,6 +54,14 @@ function criarConta(){
   if(!n||!s) return alert('preenche nome e senha');
   dados={nome:n,senha:s,bio:'clique pra editar bio...',foto:'',banner:'',amigos:[],cor:'#8b5cf6'};
   salvar(); carregar();
+}
+function entrarConta(){
+  let n=document.getElementById('loginNome').value.trim();
+  let s=document.getElementById('loginSenha').value.trim();
+  let salvo = JSON.parse(localStorage.getItem('pac2')||'null');
+  if(!salvo){ alert('nenhuma conta criada ainda'); return ir('tela2'); }
+  if(salvo.nome===n && salvo.senha===s){ dados=salvo; carregar(); }
+  else{ document.getElementById('loginErro').style.display='block'; }
 }
 function carregar(){
   ir('tela3');
@@ -91,4 +105,4 @@ function salvar(){localStorage.setItem('pac2',JSON.stringify(dados))}
 function sairConta(){if(confirm('apagar conta?')){localStorage.removeItem('pac2'); location.reload()}}
 </script>
 </body>
-  </html>
+</html>
