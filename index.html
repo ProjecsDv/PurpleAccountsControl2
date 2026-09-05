@@ -1,137 +1,156 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PurpleAccounts V4.1 - Purple File</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Purple 4.3 - FIX</title>
 <style>
 :root{--bg:#0a0a0f;--card:#15151f;--roxo:#8b5cf6;--cinza:#8b8b9f}
 *{margin:0;padding:0;box-sizing:border-box;font-family:Inter,sans-serif}
 body{background:var(--bg);color:#fff;min-height:100vh;display:flex;justify-content:center;align-items:center;padding:16px}
 .tela{display:none;width:100%;max-width:460px}.tela.ativa{display:block}
 .card{background:var(--card);border:1px solid #222236;border-radius:24px;padding:28px}
-.btn{width:100%;padding:15px;background:var(--roxo);border:none;border-radius:12px;color:#fff;font-weight:700;cursor:pointer}
-.btn-sec{background:#222232}
-.btn-purple{background:#1e1e2f;border:1px dashed var(--roxo)}
+.btn{width:100%;padding:15px;background:var(--roxo);border:none;border-radius:12px;color:#fff;font-weight:700;cursor:pointer;margin-top:10px}
+.btn-sec{background:#222232}.btn-purple{background:#1e1e2f;border:1px dashed var(--roxo)}
 input{width:100%;padding:13px;background:#0f0f18;border:1px solid #2a2a3d;border-radius:10px;color:#fff;margin-bottom:10px}
-.banner{width:100%;height:110px;background:linear-gradient(135deg,#8b5cf6,#ec4899);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:11px;cursor:pointer;overflow:hidden}
+.banner{width:100%;height:110px;background:linear-gradient(135deg,#8b5cf6,#ec4899);border-radius:14px;display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden}
 .foto{width:80px;height:80px;border-radius:50%;background:#222;border:4px solid var(--card);margin:-35px 0 0 20px;overflow:hidden;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:30px}
 .amigo{display:flex;gap:10px;align-items:center;padding:10px;background:#0f0f18;border-radius:10px;margin-bottom:8px}
 .aba{flex:1;padding:8px;background:#1e1e2f;border:none;border-radius:8px;color:var(--cinza);cursor:pointer;font-size:12px}.aba.ativa{background:var(--roxo);color:#fff}
 .conteudoAba{display:none}.conteudoAba.ativa{display:block}
 .appCard{display:flex;gap:12px;align-items:center;padding:12px;background:#0f0f18;border:1px solid #222236;border-radius:12px;margin-bottom:10px}
-.appCapa{width:50px;height:50px;border-radius:10px;background:linear-gradient(135deg,var(--roxo),#ec4899);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;flex-shrink:0}
-#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);background:#1f1f2e;border:1px solid var(--roxo);padding:12px 18px;border-radius:12px;font-size:13px;font-weight:600;transition:.4s;z-index:999;opacity:0;pointer-events:none}
+.appCapa{width:50px;height:50px;border-radius:10px;background:linear-gradient(135deg,var(--roxo),#ec4899);display:flex;align-items:center;justify-content:center;font-weight:800}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);background:#1f1f2e;border:1px solid var(--roxo);padding:12px 18px;border-radius:12px;font-size:13px;transition:.4s;z-index:999;opacity:0}
 #toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 </style>
 </head>
 <body>
-
 <div id="toast"></div>
 
-<div id="tela1" class="tela ativa"><div class="card"><h1 style="text-align:center">PURPLE 4.1</h1><p style="color:var(--cinza);text-align:center;font-size:13px;margin:8px 0 20px">eternal edition. arquivo.purple</p>
-<button class="btn" onclick="ir('tela2')">Create Account</button>
-<button class="btn btn-sec" style="margin-top:10px" onclick="ir('telaLogin')">Entrar Na Conta</button>
-<button class="btn btn-purple" style="margin-top:10px" onclick="document.getElementById('filePurple').click()">📥 COLOCAR BACKUP (.purple)</button>
-<p style="color:var(--cinza);font-size:10px;text-align:center;margin-top:8px">coloca o arquivo e recupera tudo na hora</p>
+<div id="tela1" class="tela ativa"><div class="card">
+<h1 style="text-align:center">PURPLE 4.3 FIX</h1>
+<p style="color:var(--cinza);text-align:center;font-size:13px;margin:8px 0 20px">agora vai caralho - arquivo.purple</p>
+<button class="btn" type="button" onclick="ir('tela2')">Create Account</button>
+<button class="btn btn-sec" type="button" onclick="ir('telaLogin')">Entrar Na Conta</button>
+<button class="btn btn-purple" type="button" onclick="document.getElementById('filePurpleGlobal').click()">📥 COLOCAR BACKUP (.purple)</button>
 </div></div>
 
-<div id="tela2" class="tela"><div class="card"><h2>Criar</h2><br><input id="inputNome" placeholder="Seu nome"><input id="inputSenha" type="password" placeholder="Senha"><button class="btn" onclick="criarConta()">Criar</button><button class="btn btn-sec" style="margin-top:10px" onclick="ir('tela1')">Voltar</button></div></div>
+<div id="tela2" class="tela"><div class="card"><h2>Criar</h2><br>
+<input id="inputNome" placeholder="Seu nome"><input id="inputSenha" type="password" placeholder="Senha">
+<button class="btn" type="button" onclick="criarConta()">Criar</button>
+<button class="btn btn-sec" type="button" onclick="ir('tela1')">Voltar</button>
+</div></div>
 
-<div id="telaLogin" class="tela"><div class="card"><h2>Entrar</h2><br><input id="loginNome" placeholder="Seu nome"><input id="loginSenha" type="password" placeholder="Senha"><button class="btn" onclick="entrarConta()">Entrar</button><button class="btn btn-sec" style="margin-top:10px" onclick="ir('tela1')">Voltar</button><p id="loginErro" style="color:#ff5a5a;font-size:12px;margin-top:10px;text-align:center;display:none">nome ou senha errados</p></div></div>
+<div id="telaLogin" class="tela"><div class="card"><h2>Entrar</h2><br>
+<input id="loginNome" placeholder="Seu nome"><input id="loginSenha" type="password" placeholder="Senha">
+<button class="btn" type="button" onclick="entrarConta()">Entrar</button>
+<button class="btn btn-sec" type="button" onclick="ir('tela1')">Voltar</button>
+<p id="loginErro" style="color:#ff5a5a;font-size:12px;margin-top:10px;text-align:center;display:none">nome ou senha errados</p>
+</div></div>
 
 <div id="tela3" class="tela" style="max-width:500px"><div class="card">
 <div style="position:relative"><div class="banner" id="divBanner" onclick="trocarBanner()">TROCAR BANNER</div><div class="foto" id="divFoto" onclick="trocarFoto()">:)</div></div>
 <h2 id="nomePerfil" contenteditable="true" style="margin-top:45px;outline:none"></h2>
 <div id="bioPerfil" contenteditable="true" style="color:var(--cinza);font-size:14px;margin:6px 0 14px">clique pra editar bio...</div>
-<input type="color" id="inputCor" value="#8b5cf6" oninput="mudarCor(this.value)" style="height:38px;padding:4px">
-
+<input type="color" id="inputCor" value="#8b5cf6" oninput="mudarCor(this.value)" style="height:38px">
 <div style="display:flex;gap:6px;margin:14px 0">
-<button class="aba ativa" onclick="abrirAba('amigos',this)">Amigos</button>
-<button class="aba" onclick="abrirAba('biblioteca',this)">Biblioteca</button>
-<button class="aba" onclick="abrirAba('config',this)">Configs</button>
+<button class="aba ativa" type="button" onclick="abrirAba('amigos',this)">Amigos</button>
+<button class="aba" type="button" onclick="abrirAba('biblioteca',this)">Biblioteca</button>
+<button class="aba" type="button" onclick="abrirAba('config',this)">Configs</button>
 </div>
-
-<div id="abaAmigos" class="conteudoAba ativa">
-<div style="display:flex;gap:8px"><input id="inputAmigo" placeholder="nome amigo" style="margin:0"><button class="btn" style="width:80px;margin:0" onclick="addAmigo()">Add</button></div>
-<div id="listaAmigos" style="margin-top:10px"></div>
-</div>
-
-<div id="abaBiblioteca" class="conteudoAba">
-<button class="btn" onclick="document.getElementById('fileApk').click()">📦 Importar Para Biblioteca</button>
-<p style="color:var(--cinza);font-size:11px;text-align:center;margin:8px 0">apenas arquivos.apk</p>
-<div id="listaBiblioteca" style="margin-top:12px"></div>
-</div>
-
+<div id="abaAmigos" class="conteudoAba ativa"><div style="display:flex;gap:8px"><input id="inputAmigo" placeholder="nome amigo" style="margin:0"><button class="btn" type="button" style="width:80px;margin:0" onclick="addAmigo()">Add</button></div><div id="listaAmigos" style="margin-top:10px"></div></div>
+<div id="abaBiblioteca" class="conteudoAba"><button class="btn" type="button" onclick="document.getElementById('fileApk').click()">📦 Importar Para Biblioteca</button><div id="listaBiblioteca" style="margin-top:12px"></div></div>
 <div id="abaConfig" class="conteudoAba">
 <input id="novaSenha" placeholder="nova senha">
-<button class="btn btn-sec" onclick="salvarPerfil()">Salvar Perfil</button>
-<hr style="margin:18px 0;border-color:#222236">
-<button class="btn" onclick="exportarBackup()">💾 GERAR ARQUIVO.PURPLE</button>
-<p style="color:var(--cinza);font-size:10px;text-align:center;margin:6px 0 10px">isso baixa teu arquivo.purple pra instalar depois</p>
-<button class="btn btn-purple" onclick="document.getElementById('filePurple').click()">📥 COLOCAR BACKUP (.purple)</button>
-<button class="btn" id="autoBtn" onclick="toggleAutoBackup()" style="background:#222232;margin-top:10px">🤖 Auto-Backup: OFF</button>
-<button class="btn" style="background:#3a1a1a;margin-top:18px" onclick="sairConta()">Apagar Conta</button>
+<button class="btn btn-sec" type="button" onclick="salvarPerfil()">Salvar Perfil</button><hr style="margin:18px 0;border-color:#222236">
+<button class="btn" type="button" onclick="exportarBackup()">💾 GERAR ARQUIVO.PURPLE</button>
+<button class="btn btn-purple" type="button" onclick="document.getElementById('filePurpleGlobal').click()">📥 COLOCAR BACKUP (.purple)</button>
+<button class="btn" id="autoBtn" type="button" onclick="toggleAutoBackup()" style="background:#222232">🤖 Auto-Backup: OFF</button>
+<button class="btn" type="button" style="background:#3a1a1a;margin-top:18px" onclick="sairConta()">Apagar Conta</button>
+<button class="btn btn-sec" type="button" onclick="limparTudo()">⚠️ Resetar Tudo (se bugar)</button>
 </div>
 </div></div>
 
 <input type="file" id="fileFoto" accept="image/*" hidden>
 <input type="file" id="fileBanner" accept="image/*" hidden>
 <input type="file" id="fileApk" accept=".apk" hidden>
-<input type="file" id="filePurple" accept=".purple,.json" hidden>
+<input type="file" id="filePurpleGlobal" accept=".purple,.json" hidden>
 
 <script>
-let dados = JSON.parse(localStorage.getItem('purpleV3')||'{"perfis":{}}');
-let perfilAtual = null; let intervaloAuto=null; let autoAtivo=false;
-function toast(t){let el=document.getElementById('toast');el.innerText=t;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),3000)}
-function ir(id){document.querySelectorAll('.tela').forEach(e=>e.classList.remove('ativa'));document.getElementById(id).classList.add('ativa')}
-function salvar(){localStorage.setItem('purpleV3', JSON.stringify(dados))}
-function criarConta(){let n=document.getElementById('inputNome').value.trim(), s=document.getElementById('inputSenha').value; if(!n||!s) return toast('preenche tudo'); if(dados.perfis[n]) return toast('nome já existe'); dados.perfis[n]={nome:n,senha:s,bio:'clique pra editar bio...',cor:'#8b5cf6',amigos:[],biblioteca:[],foto:'',banner:''}; salvar(); perfilAtual=n; carregarPerfil(); ir('tela3'); toast('conta criada!')}
-function entrarConta(){let n=document.getElementById('loginNome').value.trim(), s=document.getElementById('loginSenha').value; if(dados.perfis[n] && dados.perfis[n].senha===s){perfilAtual=n;carregarPerfil();ir('tela3');toast('bem vindo '+n)} else {document.getElementById('loginErro').style.display='block'}}
-function carregarPerfil(){let p=dados.perfis[perfilAtual]; document.getElementById('nomePerfil').innerText=p.nome; document.getElementById('bioPerfil').innerText=p.bio; document.getElementById('inputCor').value=p.cor; document.documentElement.style.setProperty('--roxo', p.cor); if(p.foto) document.getElementById('divFoto').innerHTML=`<img src="${p.foto}" style="width:100%;height:100%;object-fit:cover">`; else document.getElementById('divFoto').innerText=':)'; if(p.banner) document.getElementById('divBanner').innerHTML=`<img src="${p.banner}" style="width:100%;height:100%;object-fit:cover">`; renderAmigos(); renderBib();}
-function salvarPerfil(){let p=dados.perfis[perfilAtual]; p.bio=document.getElementById('bioPerfil').innerText; p.cor=document.getElementById('inputCor').value; if(document.getElementById('novaSenha').value) p.senha=document.getElementById('novaSenha').value; salvar(); toast('perfil salvo!')}
-function mudarCor(c){document.documentElement.style.setProperty('--roxo', c)}
-function abrirAba(nome, btn){document.querySelectorAll('.conteudoAba').forEach(e=>e.classList.remove('ativa'));document.querySelectorAll('.aba').forEach(e=>e.classList.remove('ativa'));document.getElementById('aba'+nome.charAt(0).toUpperCase()+nome.slice(1)).classList.add('ativa');btn.classList.add('ativa')}
-function addAmigo(){let v=document.getElementById('inputAmigo').value.trim();if(!v) return; dados.perfis[perfilAtual].amigos.push(v); salvar(); renderAmigos(); document.getElementById('inputAmigo').value=''; toast('amigo add!')}
-function renderAmigos(){let l=document.getElementById('listaAmigos');l.innerHTML='';dados.perfis[perfilAtual].amigos.forEach(a=>{l.innerHTML+=`<div class="amigo"><div style="width:32px;height:32px;background:var(--roxo);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700">${a[0].toUpperCase()}</div><span>${a}</span></div>`})}
-function renderBib(){let l=document.getElementById('listaBiblioteca');l.innerHTML='';dados.perfis[perfilAtual].biblioteca.forEach(app=>{l.innerHTML+=`<div class="appCard"><div class="appCapa">${app.nome[0].toUpperCase()}</div><div><div style="font-weight:700;font-size:13px">${app.nome}</div><div style="font-size:11px;color:var(--cinza)">${app.tamanho}</div></div></div>`})}
+console.log('PURPLE 4.3 CARREGADO');
+// LIMPA STORAGE SUJO DA V3
+let dados;
+try{ dados = JSON.parse(localStorage.getItem('purpleV4')||'{"perfis":{}}'); }catch(e){ dados={"perfis":{}}; localStorage.removeItem('purpleV4'); }
+let perfilAtual=null, intervaloAuto=null, autoAtivo=false;
+
+function toast(t){let el=document.getElementById('toast'); el.innerText=t; el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),3000)}
+function ir(id){ console.log('indo pra '+id); document.querySelectorAll('.tela').forEach(e=>e.classList.remove('ativa')); document.getElementById(id).classList.add('ativa'); }
+function salvar(){ localStorage.setItem('purpleV4', JSON.stringify(dados)); console.log('salvo'); }
+
+window.criarConta = function(){
+  let n=document.getElementById('inputNome').value.trim();
+  let s=document.getElementById('inputSenha').value;
+  if(!n||!s) return toast('preenche nome e senha');
+  if(dados.perfis[n]) return toast('esse nome já existe');
+  dados.perfis[n]={nome:n,senha:s,bio:'clique pra editar bio...',cor:'#8b5cf6',amigos:[],biblioteca:[],foto:'',banner:''};
+  salvar(); perfilAtual=n; carregarPerfil(); ir('tela3'); toast('conta criada! '+n);
+}
+window.entrarConta = function(){
+  let n=document.getElementById('loginNome').value.trim();
+  let s=document.getElementById('loginSenha').value;
+  console.log('tentando login',n);
+  if(dados.perfis[n] && dados.perfis[n].senha===s){perfilAtual=n;carregarPerfil();ir('tela3');toast('bem vindo '+n)} else {document.getElementById('loginErro').style.display='block'; toast('senha errada');}
+}
+function carregarPerfil(){
+  let p=dados.perfis[perfilAtual]; if(!p){ toast('perfil não achado'); ir('tela1'); return; }
+  document.getElementById('nomePerfil').innerText=p.nome;
+  document.getElementById('bioPerfil').innerText=p.bio;
+  document.getElementById('inputCor').value=p.cor;
+  document.documentElement.style.setProperty('--roxo', p.cor);
+  if(p.foto) document.getElementById('divFoto').innerHTML=`<img src="${p.foto}" style="width:100%;height:100%;object-fit:cover">`; else document.getElementById('divFoto').innerText=':)';
+  if(p.banner) document.getElementById('divBanner').innerHTML=`<img src="${p.banner}" style="width:100%;height:100%;object-fit:cover">`; else document.getElementById('divBanner').innerText='TROCAR BANNER';
+  renderAmigos(); renderBib();
+}
+window.salvarPerfil=function(){let p=dados.perfis[perfilAtual]; p.bio=document.getElementById('bioPerfil').innerText; p.cor=document.getElementById('inputCor').value; if(document.getElementById('novaSenha').value) p.senha=document.getElementById('novaSenha').value; salvar(); toast('perfil salvo!')}
+window.mudarCor=function(c){document.documentElement.style.setProperty('--roxo', c)}
+window.abrirAba=function(nome,btn){document.querySelectorAll('.conteudoAba').forEach(e=>e.classList.remove('ativa'));document.querySelectorAll('.aba').forEach(e=>e.classList.remove('ativa'));document.getElementById('aba'+nome.charAt(0).toUpperCase()+nome.slice(1)).classList.add('ativa');btn.classList.add('ativa')}
+window.addAmigo=function(){let v=document.getElementById('inputAmigo').value.trim();if(!v) return; dados.perfis[perfilAtual].amigos.push(v); salvar(); renderAmigos(); document.getElementById('inputAmigo').value=''; toast('amigo add!')}
+function renderAmigos(){let l=document.getElementById('listaAmigos');l.innerHTML=''; dados.perfis[perfilAtual].amigos.forEach(a=>{l.innerHTML+=`<div class="amigo"><div style="width:32px;height:32px;background:var(--roxo);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700">${a[0].toUpperCase()}</div><span>${a}</span></div>`})}
+function renderBib(){let l=document.getElementById('listaBiblioteca');l.innerHTML=''; dados.perfis[perfilAtual].biblioteca.forEach(app=>{l.innerHTML+=`<div class="appCard"><div class="appCapa">${app.nome[0].toUpperCase()}</div><div><div style="font-weight:700;font-size:13px">${app.nome}</div><div style="font-size:11px;color:var(--cinza)">${app.tamanho}</div></div></div>`})}
 document.getElementById('fileFoto').addEventListener('change',function(e){let r=new FileReader();r.onload=ev=>{dados.perfis[perfilAtual].foto=ev.target.result;salvar();carregarPerfil();toast('foto trocada!')};r.readAsDataURL(e.target.files[0])});
 document.getElementById('fileBanner').addEventListener('change',function(e){let r=new FileReader();r.onload=ev=>{dados.perfis[perfilAtual].banner=ev.target.result;salvar();carregarPerfil();toast('banner trocado!')};r.readAsDataURL(e.target.files[0])});
 document.getElementById('fileApk').addEventListener('change',function(e){let f=e.target.files[0]; if(!f) return; let tamanho=(f.size/1024/1024).toFixed(1)+' MB'; dados.perfis[perfilAtual].biblioteca.push({nome:f.name, tamanho:tamanho}); salvar(); renderBib(); toast('📦 Você Importou '+f.name)});
-function trocarFoto(){document.getElementById('fileFoto').click()}
-function trocarBanner(){document.getElementById('fileBanner').click()}
-function sairConta(){if(confirm('apagar mesmo?')){delete dados.perfis[perfilAtual]; salvar(); ir('tela1'); toast('conta apagada')}}
+window.trocarFoto=function(){document.getElementById('fileFoto').click()}
+window.trocarBanner=function(){document.getElementById('fileBanner').click()}
+window.sairConta=function(){if(confirm('apagar mesmo?')){delete dados.perfis[perfilAtual]; salvar(); ir('tela1'); toast('conta apagada')}}
+window.limparTudo=function(){if(confirm('vai apagar TUDO mesmo?')){localStorage.clear(); location.reload();}}
 
-// --- SISTEMA.PURPLE V4.1 ---
-function exportarBackup(){
-  const blob = new Blob([JSON.stringify(dados)], {type: 'application/json'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `purple-backup-${perfilAtual||'geral'}-${Date.now()}.purple`;
-  a.click();
+window.exportarBackup=function(){
+  console.log('exportando');
+  const blob=new Blob([JSON.stringify(dados)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url; a.download=`purple-backup-${perfilAtual||'geral'}-${Date.now()}.purple`; document.body.appendChild(a); a.click(); a.remove();
   toast('💾 Arquivo.purple gerado!');
 }
-document.getElementById('filePurple').addEventListener('change', function(e){
-  let file = e.target.files[0]; if(!file) return;
-  let reader = new FileReader();
-  reader.onload = ev => {
+document.getElementById('filePurpleGlobal').addEventListener('change',function(e){
+  let file=e.target.files[0]; if(!file) return;
+  let reader=new FileReader();
+  reader.onload=ev=>{
     try{
-      let importado = JSON.parse(ev.target.result);
-      if(!importado.perfis) throw 'invalid';
-      dados = importado;
-      localStorage.setItem('purpleV3', JSON.stringify(dados));
-      toast('✅ Backup.purple instalado! Escolha a conta');
+      let imp=JSON.parse(ev.target.result);
+      if(!imp.perfis) throw 'invalid';
+      dados=imp; localStorage.setItem('purpleV4',JSON.stringify(dados));
+      toast('✅ Backup.purple instalado!');
       ir('telaLogin');
-    }catch(err){ toast('❌ Arquivo.purple inválido') }
+      e.target.value='';
+    }catch(err){ toast('❌ Arquivo.purple inválido'); console.error(err); }
   };
   reader.readAsText(file);
 });
-function toggleAutoBackup(){
-  autoAtivo =!autoAtivo;
-  let btn = document.getElementById('autoBtn');
+window.toggleAutoBackup=function(){
+  autoAtivo=!autoAtivo;
+  let btn=document.getElementById('autoBtn');
   if(autoAtivo){btn.innerText='🤖 Auto-Backup: ON';btn.style.background='var(--roxo)';intervaloAuto=setInterval(exportarBackup,5*60*1000);toast('auto-backup ON!')}else{btn.innerText='🤖 Auto-Backup: OFF';btn.style.background='#222232';clearInterval(intervaloAuto);}
 }
 </script>
 </body>
-</html>
+  </html>
