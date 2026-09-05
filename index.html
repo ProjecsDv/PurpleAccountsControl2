@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PurpleAccountsControl2</title>
+<title>PurpleAccountsControl3 - Library Update</title>
 <style>
 :root{--bg:#0a0a0f;--card:#15151f;--roxo:#8b5cf6;--cinza:#8b8b9f}
 *{margin:0;padding:0;box-sizing:border-box;font-family:Inter,sans-serif}
@@ -16,13 +16,19 @@ input{width:100%;padding:13px;background:#0f0f18;border:1px solid #2a2a3d;border
 .banner{width:100%;height:110px;background:linear-gradient(135deg,#8b5cf6,#ec4899);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:11px;cursor:pointer;overflow:hidden}
 .foto{width:80px;height:80px;border-radius:50%;background:#222;border:4px solid var(--card);margin:-35px 0 0 20px;overflow:hidden;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:30px}
 .amigo{display:flex;gap:10px;align-items:center;padding:10px;background:#0f0f18;border-radius:10px;margin-bottom:8px}
-.aba{flex:1;padding:10px;background:#1e1e2f;border:none;border-radius:8px;color:var(--cinza);cursor:pointer}.aba.ativa{background:var(--roxo);color:#fff}
+.aba{flex:1;padding:8px;background:#1e1e2f;border:none;border-radius:8px;color:var(--cinza);cursor:pointer;font-size:12px}.aba.ativa{background:var(--roxo);color:#fff}
 .conteudoAba{display:none}.conteudoAba.ativa{display:block}
+.appCard{display:flex;gap:12px;align-items:center;padding:12px;background:#0f0f18;border:1px solid #222236;border-radius:12px;margin-bottom:10px}
+.appCapa{width:50px;height:50px;border-radius:10px;background:linear-gradient(135deg,var(--roxo),#ec4899);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;flex-shrink:0}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);background:#1f1f2e;border:1px solid var(--roxo);padding:12px 18px;border-radius:12px;font-size:13px;font-weight:600;transition:.4s;z-index:999;opacity:0;pointer-events:none}
+#toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 </style>
 </head>
 <body>
 
-<div id="tela1" class="tela ativa"><div class="card"><h1 style="text-align:center">PURPLE ACCOUNTS 2</h1><p style="color:var(--cinza);text-align:center;font-size:13px;margin:8px 0 20px">nova versão. sem suporte. sem reembolso.</p>
+<div id="toast"></div>
+
+<div id="tela1" class="tela ativa"><div class="card"><h1 style="text-align:center">PURPLE ACCOUNTS 3</h1><p style="color:var(--cinza);text-align:center;font-size:13px;margin:8px 0 20px">library update. sem suporte. sem reembolso.</p>
 <button class="btn" onclick="ir('tela2')">Create Account</button>
 <button class="btn btn-sec" style="margin-top:10px" onclick="ir('telaLogin')">Entrar Na Conta</button>
 </div></div>
@@ -36,23 +42,41 @@ input{width:100%;padding:13px;background:#0f0f18;border:1px solid #2a2a3d;border
 <h2 id="nomePerfil" contenteditable="true" style="margin-top:45px;outline:none"></h2>
 <div id="bioPerfil" contenteditable="true" style="color:var(--cinza);font-size:14px;margin:6px 0 14px">clique pra editar bio...</div>
 <input type="color" id="inputCor" value="#8b5cf6" oninput="mudarCor(this.value)" style="height:38px;padding:4px">
-<div style="display:flex;gap:8px;margin:14px 0"><button class="aba ativa" onclick="abrirAba('amigos',this)">Amigos</button><button class="aba" onclick="abrirAba('config',this)">Configs</button></div>
-<div id="abaAmigos" class="conteudoAba ativa"><div style="display:flex;gap:8px"><input id="inputAmigo" placeholder="nome amigo" style="margin:0"><button class="btn" style="width:80px" onclick="addAmigo()">Add</button></div><div id="listaAmigos" style="margin-top:10px"></div></div>
-<div id="abaConfig" class="conteudoAba"><input id="novaSenha" placeholder="nova senha"><button class="btn" style="background:#222232" onclick="salvarPerfil()">Salvar</button><button class="btn" style="background:#3a1a1a;margin-top:10px" onclick="sairConta()">Apagar Conta</button></div>
+
+<div style="display:flex;gap:6px;margin:14px 0">
+<button class="aba ativa" onclick="abrirAba('amigos',this)">Amigos</button>
+<button class="aba" onclick="abrirAba('biblioteca',this)">Biblioteca</button>
+<button class="aba" onclick="abrirAba('config',this)">Configs</button>
+</div>
+
+<div id="abaAmigos" class="conteudoAba ativa">
+<div style="display:flex;gap:8px"><input id="inputAmigo" placeholder="nome amigo" style="margin:0"><button class="btn" style="width:80px" onclick="addAmigo()">Add</button></div>
+<div id="listaAmigos" style="margin-top:10px"></div>
+</div>
+
+<div id="abaBiblioteca" class="conteudoAba">
+<button class="btn" onclick="document.getElementById('fileApk').click()">📦 Importar Para Biblioteca</button>
+<p style="color:var(--cinza);font-size:11px;text-align:center;margin:8px 0">apenas arquivos.apk</p>
+<div id="listaBiblioteca" style="margin-top:12px"></div>
+</div>
+
+<div id="abaConfig" class="conteudoAba"><input id="novaSenha" placeholder="nova senha"><button class="btn btn-sec" onclick="salvarPerfil()">Salvar</button><button class="btn" style="background:#3a1a1a;margin-top:10px" onclick="sairConta()">Apagar Conta</button></div>
 </div></div>
 
-<input type="file" id="fileFoto" accept="image/*" hidden><input type="file" id="fileBanner" accept="image/*" hidden>
+<input type="file" id="fileFoto" accept="image/*" hidden>
+<input type="file" id="fileBanner" accept="image/*" hidden>
+<input type="file" id="fileApk" accept=".apk" hidden>
 
 <script>
 function ir(id){document.querySelectorAll('.tela').forEach(x=>x.classList.remove('ativa'));document.getElementById(id).classList.add('ativa'); document.getElementById('loginErro').style.display='none'}
 let dados = JSON.parse(localStorage.getItem('pac2')||'null');
-if(dados) carregar();
+if(dados){ if(!dados.biblioteca) dados.biblioteca=[]; carregar(); }
 
 function criarConta(){
   let n=document.getElementById('inputNome').value.trim();
   let s=document.getElementById('inputSenha').value.trim();
   if(!n||!s) return alert('preenche nome e senha');
-  dados={nome:n,senha:s,bio:'clique pra editar bio...',foto:'',banner:'',amigos:[],cor:'#8b5cf6'};
+  dados={nome:n,senha:s,bio:'clique pra editar bio...',foto:'',banner:'',amigos:[],biblioteca:[],cor:'#8b5cf6'};
   salvar(); carregar();
 }
 function entrarConta(){
@@ -60,7 +84,7 @@ function entrarConta(){
   let s=document.getElementById('loginSenha').value.trim();
   let salvo = JSON.parse(localStorage.getItem('pac2')||'null');
   if(!salvo){ alert('nenhuma conta criada ainda'); return ir('tela2'); }
-  if(salvo.nome===n && salvo.senha===s){ dados=salvo; carregar(); }
+  if(salvo.nome===n && salvo.senha===s){ dados=salvo; if(!dados.biblioteca) dados.biblioteca=[]; carregar(); }
   else{ document.getElementById('loginErro').style.display='block'; }
 }
 function carregar(){
@@ -71,7 +95,7 @@ function carregar(){
   if(dados.banner) document.getElementById('divBanner').innerHTML=`<img src="${dados.banner}" style="width:100%;height:100%;object-fit:cover">`;
   document.getElementById('inputCor').value=dados.cor;
   document.documentElement.style.setProperty('--roxo',dados.cor);
-  renderAmigos();
+  renderAmigos(); renderBiblioteca();
 }
 function trocarFoto(){document.getElementById('fileFoto').click()}
 function trocarBanner(){document.getElementById('fileBanner').click()}
@@ -80,6 +104,16 @@ document.getElementById('fileFoto').onchange=e=>{
 }
 document.getElementById('fileBanner').onchange=e=>{
   let r=new FileReader(); r.onload=()=>{dados.banner=r.result; salvar(); carregar()}; r.readAsDataURL(e.target.files[0]);
+}
+document.getElementById('fileApk').onchange=e=>{
+  let file=e.target.files[0]; if(!file) return;
+  if(!file.name.toLowerCase().endsWith('.apk')){ alert('tem que ser.apk mano'); return; }
+  let nomeApp = file.name.replace('.apk','').replace(/_/g,' ').replace(/-/g,' ');
+  let letra = nomeApp.charAt(0).toUpperCase();
+  dados.biblioteca.push({nome:nomeApp,tamanho:(file.size/1024/1024).toFixed(1)+' MB',letra:letra,data:new Date().toLocaleDateString()});
+  salvar(); renderBiblioteca();
+  mostrarToast(`Você Importou ${nomeApp}`);
+  e.target.value='';
 }
 function mudarCor(c){dados.cor=c; document.documentElement.style.setProperty('--roxo',c); salvar()}
 function addAmigo(){
@@ -90,6 +124,17 @@ function renderAmigos(){
   let la=document.getElementById('listaAmigos');
   la.innerHTML=dados.amigos.length?dados.amigos.map((x,i)=>`<div class=amigo><b>${x[0].toUpperCase()}</b> ${x}<span onclick="dados.amigos.splice(${i},1);salvar();renderAmigos()" style="margin-left:auto;cursor:pointer">x</span></div>`).join(''):'<p style="color:var(--cinza);font-size:12px;text-align:center">sem amigos ainda</p>';
 }
+function renderBiblioteca(){
+  let lb=document.getElementById('listaBiblioteca');
+  if(!dados.biblioteca.length){ lb.innerHTML='<p style="color:var(--cinza);font-size:12px;text-align:center;margin-top:15px">biblioteca vazia<br>importa teu primeiro apk</p>'; return; }
+  lb.innerHTML=dados.biblioteca.map((app,i)=>`
+    <div class=appCard>
+      <div class=appCapa>${app.letra}</div>
+      <div style="flex:1"><b style="font-size:13px">${app.nome}</b><br><span style="color:var(--cinza);font-size:11px">${app.tamanho} • ${app.data}</span></div>
+      <span onclick="dados.biblioteca.splice(${i},1);salvar();renderBiblioteca();mostrarToast('Removido da biblioteca')" style="cursor:pointer;color:var(--cinza)">✕</span>
+    </div>
+  `).join('');
+}
 function abrirAba(t,el){
   document.querySelectorAll('.aba').forEach(x=>x.classList.remove('ativa'));
   document.querySelectorAll('.conteudoAba').forEach(x=>x.classList.remove('ativa'));
@@ -99,10 +144,14 @@ function salvarPerfil(){
   dados.bio=document.getElementById('bioPerfil').innerText;
   dados.nome=document.getElementById('nomePerfil').innerText;
   let ns=document.getElementById('novaSenha').value.trim(); if(ns) dados.senha=ns;
-  salvar(); alert('salvo!');
+  salvar(); mostrarToast('Perfil salvo!');
 }
 function salvar(){localStorage.setItem('pac2',JSON.stringify(dados))}
 function sairConta(){if(confirm('apagar conta?')){localStorage.removeItem('pac2'); location.reload()}}
+function mostrarToast(msg){
+  let t=document.getElementById('toast'); t.innerText=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
 </script>
 </body>
-</html>
+  </html>
