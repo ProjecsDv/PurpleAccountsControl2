@@ -88,4 +88,50 @@ function ir(id){document.querySelectorAll('.tela').forEach(e=>e.classList.remove
 function salvar(){localStorage.setItem('purpleV3', JSON.stringify(dados))}
 function criarConta(){let n=document.getElementById('inputNome').value.trim(), s=document.getElementById('inputSenha').value; if(!n||!s) return toast('preenche tudo'); if(dados.perfis[n]) return toast('nome já existe'); dados.perfis[n]={nome:n,senha:s,bio:'clique pra editar bio...',cor:'#8b5cf6',amigos:[],biblioteca:[],foto:'',banner:''}; salvar(); perfilAtual=n; carregarPerfil(); ir('tela3'); toast('conta criada!')}
 function entrarConta(){let n=document.getElementById('loginNome').value.trim(), s=document.getElementById('loginSenha').value; if(dados.perfis[n] && dados.perfis[n].senha===s){perfilAtual=n;carregarPerfil();ir('tela3');toast('bem vindo '+n)} else {document.getElementById('loginErro').style.display='block'}}
-function carregarPerfil(){let p=dados.perfis[perfilAtual]; document.getElementById('nomePerfil').innerText=p.nome; document.getElementById('bioPerfil').innerText=p.bio; document.getElementBy
+function carregarPerfil(){let p=dados.perfis[perfilAtual]; document.getElementById('nomePerfil').innerText=p.nome; document.getElementById('bioPerfil').innerText=p.bio; document.getElementById('inputCor').value=p.cor; document.documentElement.style.setProperty('--roxo', p.cor); if(p.foto) document.getElementById('divFoto').innerHTML=`<img src="${p.foto}" style="width:100%;height:100%;object-fit:cover">`; else document.getElementById('divFoto').innerText=':)'; if(p.banner) document.getElementById('divBanner').innerHTML=`<img src="${p.banner}" style="width:100%;height:100%;object-fit:cover">`; renderAmigos(); renderBib();}
+function salvarPerfil(){let p=dados.perfis[perfilAtual]; p.bio=document.getElementById('bioPerfil').innerText; p.cor=document.getElementById('inputCor').value; if(document.getElementById('novaSenha').value) p.senha=document.getElementById('novaSenha').value; salvar(); toast('perfil salvo!')}
+function mudarCor(c){document.documentElement.style.setProperty('--roxo', c)}
+function abrirAba(nome, btn){document.querySelectorAll('.conteudoAba').forEach(e=>e.classList.remove('ativa'));document.querySelectorAll('.aba').forEach(e=>e.classList.remove('ativa'));document.getElementById('aba'+nome.charAt(0).toUpperCase()+nome.slice(1)).classList.add('ativa');btn.classList.add('ativa')}
+function addAmigo(){let v=document.getElementById('inputAmigo').value.trim();if(!v) return; dados.perfis[perfilAtual].amigos.push(v); salvar(); renderAmigos(); document.getElementById('inputAmigo').value=''; toast('amigo add!')}
+function renderAmigos(){let l=document.getElementById('listaAmigos');l.innerHTML='';dados.perfis[perfilAtual].amigos.forEach(a=>{l.innerHTML+=`<div class="amigo"><div style="width:32px;height:32px;background:var(--roxo);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700">${a[0].toUpperCase()}</div><span>${a}</span></div>`})}
+function renderBib(){let l=document.getElementById('listaBiblioteca');l.innerHTML='';dados.perfis[perfilAtual].biblioteca.forEach(app=>{l.innerHTML+=`<div class="appCard"><div class="appCapa">${app.nome[0].toUpperCase()}</div><div><div style="font-weight:700;font-size:13px">${app.nome}</div><div style="font-size:11px;color:var(--cinza)">${app.tamanho}</div></div></div>`})}
+document.getElementById('fileFoto').addEventListener('change',function(e){let r=new FileReader();r.onload=ev=>{dados.perfis[perfilAtual].foto=ev.target.result;salvar();carregarPerfil();toast('foto trocada!')};r.readAsDataURL(e.target.files[0])});
+document.getElementById('fileBanner').addEventListener('change',function(e){let r=new FileReader();r.onload=ev=>{dados.perfis[perfilAtual].banner=ev.target.result;salvar();carregarPerfil();toast('banner trocado!')};r.readAsDataURL(e.target.files[0])});
+document.getElementById('fileApk').addEventListener('change',function(e){let f=e.target.files[0]; if(!f) return; let tamanho=(f.size/1024/1024).toFixed(1)+' MB'; dados.perfis[perfilAtual].biblioteca.push({nome:f.name, tamanho:tamanho}); salvar(); renderBib(); toast('📦 Você Importou '+f.name)});
+function trocarFoto(){document.getElementById('fileFoto').click()}
+function trocarBanner(){document.getElementById('fileBanner').click()}
+function sairConta(){if(confirm('apagar mesmo?')){delete dados.perfis[perfilAtual]; salvar(); ir('tela1'); toast('conta apagada')}}
+
+// --- SISTEMA.PURPLE V4.1 ---
+function exportarBackup(){
+  const blob = new Blob([JSON.stringify(dados)], {type: 'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `purple-backup-${perfilAtual||'geral'}-${Date.now()}.purple`;
+  a.click();
+  toast('💾 Arquivo.purple gerado!');
+}
+document.getElementById('filePurple').addEventListener('change', function(e){
+  let file = e.target.files[0]; if(!file) return;
+  let reader = new FileReader();
+  reader.onload = ev => {
+    try{
+      let importado = JSON.parse(ev.target.result);
+      if(!importado.perfis) throw 'invalid';
+      dados = importado;
+      localStorage.setItem('purpleV3', JSON.stringify(dados));
+      toast('✅ Backup.purple instalado! Escolha a conta');
+      ir('telaLogin');
+    }catch(err){ toast('❌ Arquivo.purple inválido') }
+  };
+  reader.readAsText(file);
+});
+function toggleAutoBackup(){
+  autoAtivo =!autoAtivo;
+  let btn = document.getElementById('autoBtn');
+  if(autoAtivo){btn.innerText='🤖 Auto-Backup: ON';btn.style.background='var(--roxo)';intervaloAuto=setInterval(exportarBackup,5*60*1000);toast('auto-backup ON!')}else{btn.innerText='🤖 Auto-Backup: OFF';btn.style.background='#222232';clearInterval(intervaloAuto);}
+}
+</script>
+</body>
+</html>
